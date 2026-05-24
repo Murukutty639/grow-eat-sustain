@@ -1,0 +1,433 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+/* Beginner note:
+   This CSS file controls the Home page only.
+   CSS selectors choose HTML elements, and the rules inside { } decide how they look. */
+/*
+======================================================
+HOME PAGE CSS BEGINNER WALKTHROUGH
+======================================================
+
+PURPOSE:
+This file controls the Home page's base design: colors, typography, spacing,
+navigation layout, images, videos, floating figures, cards, and responsive rules.
+
+HOW IT CONNECTS:
+- index.html provides the elements and class names.
+- styles_home.css gives those elements their main layout and visual design.
+- ../motion.css adds shared animation behavior on top.
+- ../animations.js adds classes and CSS variables that both CSS files can read.
+
+IMPORTANT:
+This file is page-specific. If another page has similar class names, it may have
+its own CSS file with similar rules.
+*/
+
+/* ===== GLOBAL :root & BASE ===== */
+/*
+======================================================
+GLOBAL VARIABLES AND BASE RESET
+======================================================
+
+PURPOSE:
+The top of a CSS file usually defines shared colors, sizes, and baseline element
+behavior. This keeps the design consistent.
+*/
+:root{
+	/* Variables store reusable values so colors and sizes stay consistent. */
+	--color-background: #f5e6d3; /* warm beige */
+	--color-primary: #5F9E69; /* sage/forest green */
+	--color-primary-2: #548235;
+	--color-accent: #1abc9c; /* mint */
+	--color-dark: #34495E; /* slate/teal accent */
+	--color-text: #2c3e50;
+	--color-muted: #6b6b6b;
+	--white: #ffffff;
+	--card-shadow: rgba(20,30,20,0.06);
+	--glass: rgba(255,255,255,0.8);
+	--radius-lg: 20px;
+	--radius-md: 12px;
+	--max-width: 1200px;
+}
+
+/* Reset */
+/* The reset removes browser default spacing so the design starts from a clean base. */
+/*
+Browsers add default margin and padding to many elements. Resetting them makes
+the page easier to design because every element starts from a predictable state.
+*/
+*{box-sizing:border-box;margin:0;padding:0}
+/*
+`box-sizing: border-box` means an element's width includes padding and border.
+This makes layout math much easier for beginners and professionals.
+*/
+html,body{height:100%;display:flex;flex-direction:column}
+/*
+The body is a vertical flex container so `main{flex:1}` can push the footer
+toward the bottom when content is short.
+*/
+body{
+	font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+	background:var(--color-background);
+	color:var(--color-text);
+	line-height:1.65;
+	-webkit-font-smoothing:antialiased;
+}
+main{flex:1;width:100%}
+/* `flex:1` lets main content grow and fill available vertical space. */
+
+img,picture,video,iframe{max-width:100%;display:block}
+/*
+Media should not overflow its container.
+`display:block` removes small inline spacing gaps under images/iframes.
+*/
+.container{max-width:var(--max-width);margin:0 auto;padding:2rem 1.25rem}
+/*
+`.container` centers content and prevents text from stretching too wide.
+The side padding keeps content away from screen edges on mobile.
+*/
+
+/* ===== NAVBAR ===== */
+/* The nav bar is sticky, so it stays visible at the top while scrolling. */
+/*
+======================================================
+HOME NAVIGATION BAR
+======================================================
+
+PURPOSE:
+The navigation provides links to the main pages and a call-to-action button.
+
+HOW IT WORKS:
+`.site-nav` sticks to the top. `.nav-inner` arranges brand, links, and button.
+Hover underline effects are created with the `::after` pseudo-element.
+*/
+.site-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.72);backdrop-filter:blur(6px);border-bottom:1px solid rgba(20,30,20,0.04)}
+.site-nav .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.85rem 0}
+.brand{font-weight:700;color:var(--color-primary);letter-spacing:0.6px}
+.nav-links{display:flex;gap:1rem;align-items:center}
+.nav-links a{color:var(--color-dark);text-decoration:none;position:relative;padding:0.25rem;transition:color .22s ease}
+.nav-links a::after{content:'';position:absolute;left:0;right:0;bottom:-6px;height:2px;background:var(--color-accent);transform:scaleX(0);transform-origin:left;transition:transform .24s ease}
+/* The underline starts scaled to zero, then expands on hover. */
+.nav-links a:hover{color:var(--color-primary)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-actions{display:flex;gap:.5rem}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.55rem .9rem;border-radius:8px;border:0;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease,background-color .18s ease}
+.btn--ghost{background:transparent;color:var(--color-primary);border:1px solid rgba(95,158,105,0.12)}
+.cta-button{background:var(--color-primary);color:var(--white);box-shadow:0 10px 30px rgba(94,158,105,0.12)}
+.btn:hover,.cta-button:hover{transform:translateY(-2px);box-shadow:0 16px 32px rgba(94,158,105,0.16)}
+.btn:focus-visible,.cta-button:focus-visible{outline:3px solid rgba(95,158,105,0.24);outline-offset:3px}
+.btn:active,.cta-button:active{transform:scale(.98)}
+
+/* ===== HOME: LEAF BACKGROUNDS & KEYFRAMES ===== */
+/* These older inline/background leaves add extra decoration behind the page content. */
+/*
+======================================================
+HOME DECORATIVE LEAVES
+======================================================
+
+PURPOSE:
+These rules position and animate leaf decorations. Some are inline SVGs in the
+HTML, while these classes provide position, size, and motion.
+
+WHY POINTER-EVENTS IS NONE:
+Leaves should never block clicks on links, buttons, or videos.
+*/
+.leaf-left,.leaf-right{position:absolute;top:-20px;width:360px;height:360px;background-repeat:no-repeat;background-size:contain;opacity:.95;pointer-events:none;z-index:0}
+.leaf-left{left:-40px;animation:floatLeafLeft 12s ease-in-out infinite alternate}
+.leaf-right{right:-40px;animation:floatLeafRight 14s ease-in-out infinite alternate}
+@keyframes floatLeafLeft{
+	/* This animation gently shifts and rotates the left leaf over time. */
+	0%{transform:translate(0,0) rotate(0deg);opacity:0.95}
+	50%{transform:translate(-12px,22px) rotate(-6deg);opacity:0.82}
+	100%{transform:translate(0,0) rotate(0deg);opacity:0.95}
+}
+@keyframes floatLeafRight{
+	/* This animation mirrors the idea for the right leaf. */
+	0%{transform:translate(0,0) rotate(0deg);opacity:0.95}
+	50%{transform:translate(10px,18px) rotate(5deg);opacity:0.84}
+	100%{transform:translate(0,0) rotate(0deg);opacity:0.95}
+}
+
+/* smaller, subtler leaf */
+.leaf-sm{position:absolute;top:10px;right:20%;width:180px;height:180px;background-size:contain;opacity:.8;z-index:0;animation:floatLeafTiny 9s ease-in-out infinite alternate}
+.leaf-mid{position:absolute;top:28%;left:8%;width:220px;height:220px;opacity:.82;pointer-events:none;z-index:0;animation:floatLeafMid 13s ease-in-out infinite alternate}
+.leaf-bottom{position:absolute;bottom:-18px;right:10%;width:260px;height:260px;opacity:.75;pointer-events:none;z-index:0;animation:floatLeafBottom 16s ease-in-out infinite alternate}
+@keyframes floatLeafTiny{0%{transform:translateY(0) rotate(0)}50%{transform:translateY(10px) rotate(-4deg)}100%{transform:translateY(0) rotate(0)}}
+@keyframes floatLeafMid{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(-18px,24px) rotate(-7deg)}100%{transform:translate(0,0) rotate(0)}}
+@keyframes floatLeafBottom{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(12px,-18px) rotate(6deg)}100%{transform:translate(0,0) rotate(0)}}
+
+/* ===== HERO ===== */
+/*
+The `.hero` rules are available for a hero section style.
+Even if the current HTML does not use every hero class, keeping them here lets
+the page support a large introduction block if needed.
+*/
+.hero{min-height:72vh;display:flex;align-items:center;padding:3rem;border-radius:var(--radius-lg);background:linear-gradient(180deg,rgba(255,255,255,0.6),rgba(245,245,240,0.6));box-shadow:0 8px 24px var(--card-shadow);margin:1.5rem 0}
+
+/* ===== HEADER MATCH BACKGROUND ===== */
+/* header transparent so decorative leaves are visible at edges */
+header{background:transparent}
+/* Center the Home page title area and keep the title 25% larger than its earlier size. */
+header > .container:not(.nav-inner){text-align:center}
+header > .container:not(.nav-inner) > h1{font-size:clamp(2.5rem,5.625vw,4.25rem);line-height:1.08;margin-inline:auto}
+header > .container:not(.nav-inner) > p{font-size:clamp(1.05rem,2vw,1.5rem);max-width:62ch;margin-inline:auto}
+.hero-inner{display:flex;gap:2rem;align-items:center;width:100%}
+.hero-copy{flex:1}
+.hero h1{font-size:clamp(2rem,4.5vw,3.4rem);font-weight:700;letter-spacing:0.6px;color:var(--color-primary);margin-bottom:.6rem}
+.hero p{color:var(--color-muted);font-size:1.05rem;max-width:60ch;margin-bottom:1rem}
+
+/* ===== GRID CARDS ===== */
+/*
+CSS Grid creates responsive columns automatically.
+`repeat(auto-fit,minmax(300px,1fr))` means:
+- make as many columns as fit
+- each column should be at least 300px
+- extra space is shared evenly
+*/
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.25rem;margin:2rem 0}
+.card{background:var(--white);border-radius:var(--radius-md);padding:1.25rem;box-shadow:0 12px 30px var(--card-shadow);transition:transform .28s cubic-bezier(.2,.9,.2,1),box-shadow .28s ease}
+.card:hover{transform:translateY(-6px);box-shadow:0 24px 48px rgba(20,30,20,0.09)}
+.card h4{margin-bottom:.5rem;color:var(--color-primary);font-weight:600}
+.card p{color:var(--color-muted)}
+
+/* ===== MEDIA (VIDEOS & IFRAME) ===== */
+/* aspect-ratio keeps videos in a widescreen rectangle even when the page width changes. */
+/*
+The responsive media wrapper prevents YouTube iframes from becoming too tall,
+too short, or distorted as screen width changes.
+*/
+.responsive-media{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;box-shadow:0 8px 20px rgba(20,30,20,0.06)}
+.responsive-media iframe,.responsive-media video{position:static;width:100%;height:100%;border:0;display:block}
+.responsive-media.first-video{width:min(100%,680px);margin:0 auto}
+
+/* ===== IMAGES ===== */
+.img-rounded{border-radius:12px;box-shadow:0 10px 30px rgba(20,30,20,0.06);transition:transform .32s ease}
+.img-rounded:hover{transform:scale(1.02)}
+
+/* ===== MEDIA WRAP & ALTERNATING FIGURES ===== */
+/*
+======================================================
+FLOATING FIGURES BESIDE TEXT
+======================================================
+
+PURPOSE:
+On larger screens, images float beside text to create a magazine-style layout.
+
+RESPONSIVE BEHAVIOR:
+The media query below removes floats on screens under 768px so images stack
+above/below text. This avoids narrow squeezed text on phones.
+*/
+section article{margin-bottom:1.25rem;overflow:visible}
+section article figure{width:clamp(180px,30%,320px);float:left;margin:0 1.25rem 1rem 0;shape-outside:inset(0);-webkit-shape-outside:inset(0);shape-margin:12px;overflow:hidden}
+section article figure img{width:100%;height:auto;display:block;border-radius:12px}
+section article:nth-of-type(even) figure{float:right;margin:0 0 1rem 1.25rem}
+
+/* utility classes if HTML uses them */
+.media-left{float:left;margin:0 1.25rem 1rem 0;width:clamp(180px,30%,320px)}
+.media-right{float:right;margin:0 0 1rem 1.25rem;width:clamp(180px,30%,320px)}
+/* `source-media` is used for figures with important caption links.
+   These rules keep the source link clickable above animation/hover layers. */
+.source-media{overflow:visible;pointer-events:auto}
+.source-media figcaption{position:relative;z-index:3;pointer-events:auto}
+.source-media a{position:relative;z-index:4;pointer-events:auto}
+.motion-enabled .source-media.reveal-item{pointer-events:auto}
+
+@media(max-width:768px){section article figure, .media-left, .media-right{float:none;width:100%;margin:0 0 1rem 0;shape-outside:none}}
+/* On tablets/phones, full-width images are easier to read and tap around. */
+
+/* ===== LISTS ===== */
+.fancy-list{list-style:none;padding-left:0;display:grid;gap:.6rem}
+.fancy-list li{padding-left:1.25rem;position:relative;color:var(--color-muted)}
+.fancy-list li::before{content:'•';position:absolute;left:0;color:var(--color-primary);font-weight:700}
+
+/* ===== FOOTER ===== */
+footer{background:linear-gradient(180deg,var(--color-dark),rgba(52,73,94,0.9));color:rgba(255,255,255,0.92);padding:2rem 0;border-radius:12px;text-align:center;margin-top:auto}
+footer p{margin:0}
+
+/* ===== ANIMATIONS & KEYFRAMES ===== */
+@keyframes slideIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+.fade-in{animation:slideIn .6s ease both}
+
+/* ===== VIDEO GRID (Learn More) ===== */
+/*
+The Learn More videos use a two-column grid on larger screens.
+The minmax value prevents videos from becoming too narrow.
+*/
+.video-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;align-items:start}
+.video-grid .responsive-media{width:100%}
+
+/* Featured single video (centered, constrained) */
+.responsive-media.featured{max-width:45%;margin:0 auto}
+@media(max-width:768px){.responsive-media.featured{max-width:100%}}
+
+/* ensure section headings don't sit beside floats */
+section > h2{clear:both;display:block;margin-top:1.5rem}
+
+/* ===== RESPONSIVE ===== */
+/*
+======================================================
+HOME RESPONSIVE BREAKPOINTS
+======================================================
+
+max-width: 768px:
+Tablet/phone layout. Hero becomes shorter, nav spacing tightens, and decorative
+leaves are hidden so they do not crowd the screen.
+
+max-width: 480px:
+Small phone layout. Padding and headings shrink, and the CTA button becomes full
+width for easier tapping.
+*/
+@media(max-width:768px){
+	body{padding-bottom:5.75rem}
+	.container{padding-inline:1rem}
+	.site-nav .nav-inner{flex-wrap:wrap;justify-content:center;row-gap:.65rem}
+	.brand{width:100%;text-align:center}
+	.site-nav .nav-links:not(.floating-page-nav){flex:1 1 100%;justify-content:center;flex-wrap:wrap;gap:.35rem}
+	.site-nav .nav-links:not(.floating-page-nav) a{min-height:2.15rem;padding:.42rem .58rem}
+	.nav-actions{width:100%;justify-content:center}
+	.hero{min-height:56vh;padding:2rem}
+	.hero-inner{flex-direction:column}
+	header > .container:not(.nav-inner) > h1{font-size:clamp(2.15rem,12vw,3.25rem)}
+	.responsive-media.first-video{width:100%}
+	.video-grid{grid-template-columns:1fr}
+	section article figure, .media-left, .media-right{max-width:100%}
+	.leaf-left,.leaf-right,.leaf-sm,.leaf-mid,.leaf-bottom{display:none}
+}
+@media(max-width:480px){
+	body{padding-bottom:6.25rem}
+	.container{padding:1.1rem .85rem}
+	.site-nav .nav-links:not(.floating-page-nav) a{font-size:.88rem;padding:.36rem .46rem}
+	.hero{padding:1.25rem;border-radius:12px}
+	.hero h1{font-size:1.6rem}
+	.cta-button{width:100%;justify-content:center}
+	.img-rounded,.responsive-media{border-radius:10px}
+}
+
+/* ===== PAGE-SPECIFIC HELPERS (HOME) ===== */
+/* This copied floating nav styling gives the Home page the same side menu look as PAP. */
+/*
+======================================================
+HOME FLOATING SECTION NAVIGATION
+======================================================
+
+PURPOSE:
+This styles the Home page's section jump menu. It is similar to the PAP menu,
+so it uses the same `floating-page-nav--pap` modifier class.
+
+HOW JAVASCRIPT CONNECTS:
+animations.js updates active link classes and CSS variables when the user scrolls
+or clicks section links.
+*/
+.floating-page-nav.floating-page-nav--pap{--floating-nav-orange:#d54e00;--floating-nav-dark:#2f1b0c;--floating-nav-text:rgba(255,255,255,0.92);--floating-nav-active-top:0.62rem;--floating-nav-active-height:2.75rem;position:fixed;top:50%;right:24px;z-index:5000;display:flex;flex-direction:column;align-items:stretch;gap:0.5rem;width:min(17.25rem,calc(100vw - 2rem));padding:0.62rem;border:1px solid rgba(255,201,150,0.38);border-radius:18px;background:radial-gradient(circle at 22% 12%, rgba(255,225,190,0.42), transparent 38%), linear-gradient(160deg, rgba(213,78,0,0.92), rgba(199,76,0,0.72));box-shadow:0 24px 74px rgba(109,46,5,0.24),0 0 0 1px rgba(255,255,255,0.08) inset,0 1px 0 rgba(255,255,255,0.28) inset;backdrop-filter:blur(22px) saturate(1.28);-webkit-backdrop-filter:blur(22px) saturate(1.28);opacity:0.72;transform:translate3d(0,-50%,0);transition:opacity 340ms cubic-bezier(0.4,0,0.2,1),transform 340ms cubic-bezier(0.4,0,0.2,1),box-shadow 340ms cubic-bezier(0.4,0,0.2,1);animation:navFloatIn 760ms cubic-bezier(0.19,1,0.22,1) 180ms both;will-change:opacity,transform}
+.floating-page-nav.floating-page-nav--pap::before{content:"";position:absolute;left:0.42rem;top:var(--floating-nav-active-top);width:3px;height:var(--floating-nav-active-height);border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,0.96),rgba(255,215,168,0.9));box-shadow:0 0 18px rgba(255,255,255,0.82),0 0 34px rgba(252,106,3,0.7);opacity:0;transform-origin:center;transition:top 320ms cubic-bezier(0.4,0,0.2,1),height 320ms cubic-bezier(0.4,0,0.2,1),opacity 260ms cubic-bezier(0.4,0,0.2,1),transform 320ms cubic-bezier(0.4,0,0.2,1)}
+.floating-page-nav.floating-page-nav--pap::after{content:"";position:absolute;inset:-18%;border-radius:inherit;background:radial-gradient(circle at 45% 35%,rgba(255,228,196,0.42),transparent 58%);opacity:0.2;transform:translate3d(0,0,0) scale(0.96);animation:softGlowShift 5.8s cubic-bezier(0.45,0,0.55,1) infinite alternate;pointer-events:none;z-index:-1}
+.floating-page-nav.floating-page-nav--pap.is-visible,.floating-page-nav.floating-page-nav--pap:hover,.floating-page-nav.floating-page-nav--pap:focus-within{opacity:1;transform:translate3d(0,-50%,0) scale(1);box-shadow:0 30px 86px rgba(109,46,5,0.3),0 0 0 1px rgba(255,255,255,0.12) inset,0 1px 0 rgba(255,255,255,0.34) inset}
+.floating-page-nav.floating-page-nav--pap.is-idle:not(:hover):not(:focus-within){opacity:0.86;transform:translate3d(0,-50%,0) scale(0.992)}
+.floating-page-nav.floating-page-nav--pap.has-active::before{opacity:1;animation:smoothIndicatorSlide 340ms cubic-bezier(0.4,0,0.2,1) both}
+.floating-page-nav.floating-page-nav--pap a{--nav-shift-x:0px;--button-scale:1;position:relative;width:100%;min-height:2.72rem;padding:0.68rem 0.86rem 0.68rem 1.04rem;border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:var(--floating-nav-text);background:rgba(255,255,255,0.08);font-size:clamp(0.78rem,0.74rem + 0.12vw,0.9rem);font-weight:600;line-height:1.22;text-decoration:none;text-shadow:0 1px 18px rgba(77,28,0,0.28);box-shadow:inset 0 1px 0 rgba(255,255,255,0.12);white-space:normal;overflow-wrap:anywhere;transform:translate3d(calc(var(--magnetic-x) + var(--nav-shift-x)),var(--magnetic-y),0) scale(var(--button-scale));transition:color 280ms cubic-bezier(0.4,0,0.2,1),background 320ms cubic-bezier(0.4,0,0.2,1),border-color 320ms cubic-bezier(0.4,0,0.2,1),box-shadow 320ms cubic-bezier(0.4,0,0.2,1),opacity 320ms cubic-bezier(0.4,0,0.2,1),transform 320ms cubic-bezier(0.4,0,0.2,1);animation:fadeSlideRight 520ms cubic-bezier(0.16,1,0.3,1) both;animation-delay:var(--stagger-delay,0ms);will-change:transform,opacity}
+.floating-page-nav.floating-page-nav--pap a::before{content:"";position:absolute;inset:2px;border-radius:inherit;background:radial-gradient(circle at 24% 20%,rgba(255,255,255,0.12),transparent 52%),linear-gradient(90deg,rgba(255,255,255,0.18),rgba(255,227,198,0.08));opacity:0;transform:scaleX(0.82);transform-origin:right center;transition:opacity 300ms cubic-bezier(0.4,0,0.2,1),transform 320ms cubic-bezier(0.4,0,0.2,1);pointer-events:none;z-index:-1}
+.floating-page-nav.floating-page-nav--pap a::after{display:none}
+.floating-page-nav.floating-page-nav--pap a:hover,.floating-page-nav.floating-page-nav--pap a:focus-visible{--nav-shift-x:-5px;--button-scale:1.025;color:#ffffff;background:rgba(255,235,210,0.22);border-color:rgba(255,221,175,0.34);box-shadow:0 12px 30px rgba(104,45,4,0.18),inset 0 1px 0 rgba(255,255,255,0.22)}
+.floating-page-nav.floating-page-nav--pap a:hover::before,.floating-page-nav.floating-page-nav--pap a:focus-visible::before{opacity:0.74;transform:scaleX(1)}
+.floating-page-nav.floating-page-nav--pap a.is-active,.floating-page-nav.floating-page-nav--pap a[aria-current="true"]{--nav-shift-x:-3px;--button-scale:1.04;color:#ffffff;font-weight:800;background:rgba(255,255,255,0.22);border-color:rgba(255,244,231,0.46);box-shadow:0 0 26px rgba(255,255,255,0.18),0 14px 38px rgba(104,45,4,0.22),inset 0 1px 0 rgba(255,255,255,0.32);animation:activeTextGrow 340ms cubic-bezier(0.4,0,0.2,1) both}
+.floating-page-nav.floating-page-nav--pap a.is-active::before,.floating-page-nav.floating-page-nav--pap a[aria-current="true"]::before{opacity:1;transform:scaleX(1);animation:navGlowPulse 2.4s cubic-bezier(0.4,0,0.2,1) infinite alternate}
+.home-features{margin-top:1.75rem}
+.stat{display:flex;flex-direction:column;gap:.25rem}
+.stat .num{font-weight:700;font-size:1.5rem;color:var(--color-primary)}
+
+.floating-page-nav.floating-page-nav--pap::before{display:none}
+.floating-page-nav.floating-page-nav--pap a{animation:none;transition:color 280ms cubic-bezier(0.4,0,0.2,1),background 320ms cubic-bezier(0.4,0,0.2,1),border-color 320ms cubic-bezier(0.4,0,0.2,1),box-shadow 320ms cubic-bezier(0.4,0,0.2,1)}
+.floating-page-nav.floating-page-nav--pap a.is-active,.floating-page-nav.floating-page-nav--pap a[aria-current="true"]{animation:none}
+.floating-page-nav.floating-page-nav--pap a.is-active::before,.floating-page-nav.floating-page-nav--pap a[aria-current="true"]::before{animation:none}
+
+@media(min-width:1025px) and (max-width:1400px){
+	:root{--max-width:1080px}
+	body.motion-page-home{--floating-nav-column:16rem}
+	body.motion-page-home main.container{padding-right:17.25rem}
+	.floating-page-nav.floating-page-nav--pap{
+		right:16px;
+		width:14.5rem;
+		gap:.42rem;
+		padding:.5rem;
+	}
+	.floating-page-nav.floating-page-nav--pap a{
+		min-height:2.42rem;
+		padding:.58rem .72rem .58rem .86rem;
+		font-size:.76rem;
+	}
+}
+
+@media(min-width:1025px) and (max-height:800px){
+	header > .container:not(.nav-inner){padding-block:1.25rem}
+	header > .container:not(.nav-inner) > h1{font-size:clamp(2.35rem,4.5vw,3.45rem)}
+	main.container{padding-top:1.25rem;padding-bottom:1.5rem}
+	section > h2{margin-top:1rem}
+	.floating-page-nav.floating-page-nav--pap{
+		gap:.38rem;
+		padding:.46rem;
+	}
+	.floating-page-nav.floating-page-nav--pap a{
+		min-height:2.28rem;
+		padding-block:.52rem;
+	}
+}
+
+@media(max-width:768px){
+	.floating-page-nav.floating-page-nav--pap{
+		top:auto;
+		right:.75rem;
+		bottom:.75rem;
+		left:.75rem;
+		width:auto;
+		max-width:none;
+		flex-direction:row;
+		align-items:center;
+		gap:.4rem;
+		padding:.42rem;
+		border-radius:999px;
+		overflow-x:auto;
+		overscroll-behavior-x:contain;
+		scrollbar-width:none;
+		opacity:.97;
+		transform:none;
+		animation:none;
+	}
+	.floating-page-nav.floating-page-nav--pap::-webkit-scrollbar{display:none}
+	.floating-page-nav.floating-page-nav--pap::after{inset:-10%;opacity:.16}
+	.floating-page-nav.floating-page-nav--pap.is-visible,
+	.floating-page-nav.floating-page-nav--pap:hover,
+	.floating-page-nav.floating-page-nav--pap:focus-within,
+	.floating-page-nav.floating-page-nav--pap.is-idle:not(:hover):not(:focus-within){
+		opacity:.97;
+		transform:none;
+	}
+	.floating-page-nav.floating-page-nav--pap a{
+		flex:0 0 auto;
+		width:auto;
+		min-width:max-content;
+		max-width:11rem;
+		min-height:2.45rem;
+		padding:.62rem .82rem;
+		font-size:.78rem;
+		white-space:nowrap;
+	}
+	.floating-page-nav.floating-page-nav--pap a:hover,
+	.floating-page-nav.floating-page-nav--pap a:focus-visible,
+	.floating-page-nav.floating-page-nav--pap a.is-active,
+	.floating-page-nav.floating-page-nav--pap a[aria-current="true"]{
+		--nav-shift-x:0px;
+	}
+}
+
+@media(max-width:420px){
+	.floating-page-nav.floating-page-nav--pap a{
+		max-width:9rem;
+		min-height:2.35rem;
+		padding:.56rem .72rem;
+		font-size:.74rem;
+	}
+}
+
+/* accessibility focus */
+:focus{outline:3px solid rgba(26,188,156,0.12);outline-offset:3px}
+
