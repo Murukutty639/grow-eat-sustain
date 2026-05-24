@@ -62,20 +62,42 @@ HOW IT CONNECTS:
         <div class="container">
             <h1>About the Author</h1>
             <!-- The main heading communicates the purpose of the page. -->
+            <nav class="nav-links floating-page-nav floating-page-nav--pap" aria-label="About page sections">
+                <a href="#details">Details</a>
+                <a href="#references">References &amp; Credits</a>
+            </nav>
         </div>
     </header>
 
     <!-- About page biography and references -->
     <main class="container">
         <!-- aria-labelledby connects this section to the h2 title for accessibility. -->
-        <section aria-labelledby="author-bio-title">
+        <section id="details" aria-labelledby="author-bio-title">
             <!-- Screen readers can identify this region by the heading below. -->
-            <h2 id="author-bio-title">Author Biography</h2>
-            <p>Murugan is an AI student and nature lover who enjoys exploring the natural world. He is passionate about solving environmental challenges and promoting sustainable food systems.</p>
+            <h2 id="author-bio-title">Details</h2>
+
+            <h3>Introduction - Who I Am</h3>
+            <p>I am Bala Murugan Ravi, an AI student and a nature lover. I enjoy learning about technology and exploring ways to protect the environment and create a more sustainable future.</p>
+
+            <h3>My Passion for Sustainability and Environmental Issues</h3>
+            <p>Food means life. Without food, there is no life. However, even when food is available, it must be sufficient, safe, and accessible to meet people's needs and prevent hunger. In recent years, food security has been facing increasing challenges due to various global issues. I believe it is important to ensure food sustainability so that everyone has access to enough food now and in the future.</p>
+
+            <h3>My Experiences Related to Food Sustainability</h3>
+            <figure class="about-experience-media">
+                <img class="img-rounded" src="Images/hydroponics.jpg" alt="Hydroponic plants growing in a controlled system" loading="lazy">
+                <figcaption>Hydroponics activity: growing spinach while using less land.</figcaption>
+                <img class="img-rounded" src="Images/Food_from_heart.jpeg" alt="Food from the Heart community food packs" loading="lazy">
+                <figcaption>Food from the Heart donation: more than 40 kg of food collected for people in need.</figcaption>
+            </figure>
+            <p>When I was a Primary 5 student in 2020, my science teacher conducted a hydroponics activity where we grew spinach. This experience taught me that hydroponics can help reduce food imports and increase local food supply. It is also useful because it does not require large areas of land for farming. Hydroponic systems can be used in vertical farms, which take up much less space while producing food efficiently.</p>
+            <p>Later, in Secondary 4 in 2025, my classmates and I donated more than 40 kg of food to <a href="https://www.foodfromtheheart.sg/" target="_blank" rel="noopener noreferrer">Food from the Heart</a> to help people in need. We realised that many shops and households often have excess food and may throw it away without considering donating it to those who need it. This experience helped me understand the importance of reducing food waste and supporting the community.</p>
+
+            <h3>My Vision for a More Sustainable Future</h3>
+            <p>I hope that people in Singapore will work together to achieve stronger food sustainability by reducing food imports and food wastage while increasing local food production. Through teamwork and responsible actions, we can create a future where food is sustainable and accessible for everyone.</p>
         </section>
 
         <!-- This section lists research links and image credits. -->
-        <section aria-labelledby="references-title">
+        <section id="references" aria-labelledby="references-title">
             <!-- References are grouped in one section because they serve one purpose: credit and verification. -->
             <h2 id="references-title">References &amp; Credits</h2>
             <!-- `&amp;` is the safe HTML entity for an ampersand character. -->
@@ -104,6 +126,8 @@ HOW IT CONNECTS:
                     <li><a href="https://www.istockphoto.com/photo/blue-growth-graph-business-chart-data-diagram-on-success-financial-presentation-gm1402830853-455599094?searchscope=image%2Cfilm%2Cvideo%2Caudio&sort=best&mediatype=image">Image of growth graph - iStock</a></li>
                     <li><a href='https://www.istockphoto.com/search/2/image-film?phrase=zero+food+waste&tracked_gsrp_landing=https%3A%2F%2Fwww.istockphoto.com%2Fphotos%2Fzero-food-waste'>Image of zero food waste - iStock</a></li>
                     <li><a href = 'https://www.shutterstock.com/image-photo/green-recycling-symbol-on-organic-compost-2767055423?trackingId=ec4c6cb1-c2fd-4215-91d4-4169ff3ce9e8&listId=searchResults'>Image of green recycling symbol - Shutterstock</a></li>
+                    <li><a href="https://stock.adobe.com/sg/search?filters%5Bcontent_type%3Aphoto%5D=1&filters%5Bcontent_type%3Aillustration%5D=1&filters%5Bcontent_type%3Azip_vector%5D=1&filters%5Bcontent_type%3Avideo%5D=1&filters%5Bcontent_type%3Atemplate%5D=1&filters%5Bcontent_type%3A3d%5D=1&filters%5Bcontent_type%3Aaudio%5D=0&filters%5Binclude_stock_enterprise%5D=0&filters%5Bis_editorial%5D=0&filters%5Bcontent_type%3Aimage%5D=1&filters%5Bfree_collection%5D=0&k=hydroponic&order=relevance&native_visual_search=&serie_id=&model_id=&similar_content_id=480418231&find_similar_by=all&search_page=1&search_type=hover-find-similar&get_facets=0">Image of hydroponics - Adobe Stock</a></li>
+                    <li><a href="https://www.foodfromtheheart.sg/community-food-pack/">Image of Food from the Heart community food pack - Food from the Heart</a></li>
                     <li>Decorative leaf SVG shapes - inline project artwork</li>
                 </ul>
             </div>

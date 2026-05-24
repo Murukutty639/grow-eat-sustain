@@ -82,6 +82,9 @@ the HTML uses those class names.
 .about-copy{max-width:60ch}
 .about h1{font-size:clamp(1.8rem,3.6vw,2.8rem);color:var(--color-primary);font-weight:700;margin-bottom:.5rem}
 .about p{color:var(--color-muted)}
+main section h2{margin-top:1.25rem;color:#000}
+main section h3{margin-top:1.25rem;color:var(--color-primary)}
+main section p{margin-top:.55rem}
 
 /* ===== HEADER MATCH BACKGROUND ===== */
 header{background:var(--color-background)}
@@ -89,6 +92,17 @@ header{background:var(--color-background)}
 header > .container:not(.nav-inner){text-align:center}
 header > .container:not(.nav-inner) > h1{font-size:clamp(2.25rem,4.5vw,3.5rem);line-height:1.08;margin-inline:auto}
 header > .container:not(.nav-inner) > p{font-size:clamp(1.05rem,2vw,1.5rem);max-width:62ch;margin-inline:auto}
+
+@media(min-width:1025px){
+  body.motion-page-about{--floating-nav-column:clamp(18rem,22vw,22rem)}
+  body.motion-page-about main.container{max-width:calc(var(--max-width) + var(--floating-nav-column));padding-right:calc(1.25rem + var(--floating-nav-column))}
+}
+
+@media(min-width:1025px) and (max-width:1400px){
+  :root{--max-width:1080px}
+  body.motion-page-about{--floating-nav-column:16rem}
+  body.motion-page-about main.container{padding-right:17.25rem}
+}
 
 /* ===== MEDIA WRAP & ALTERNATING FIGURES ===== */
 /*
@@ -100,7 +114,11 @@ section article{margin-bottom:1.25rem}
 section article figure{width:clamp(180px,30%,320px);float:left;margin:0 1.25rem 1rem 0;shape-outside:inset(0);-webkit-shape-outside:inset(0);shape-margin:12px;overflow:hidden}
 section article figure img{width:100%;height:auto;display:block;border-radius:12px}
 section article:nth-of-type(even) figure{float:right;margin:0 0 1rem 1.25rem}
-@media(max-width:768px){section article figure{float:none;width:100%;margin:0 0 1rem 0}}
+.about-experience-media{float:right;width:clamp(160px,24%,260px);margin:.25rem 0 1rem 1.25rem}
+.about-experience-media img{width:100%;height:auto;display:block;border-radius:12px}
+.about-experience-media img + figcaption + img{margin-top:.85rem}
+.about-experience-media figcaption{margin-top:.4rem;color:var(--color-muted);font-size:.82rem;line-height:1.35}
+@media(max-width:768px){section article figure{float:none;width:100%;margin:0 0 1rem 0}.about-experience-media{float:none;width:min(100%,320px);margin:0 auto 1rem auto}}
 
 /* ===== PROFILE GRID ===== */
 /* A grid can automatically fit profile cards into columns on larger screens. */
@@ -126,7 +144,7 @@ At widths below 480px, padding and heading size reduce for small phone screens.
 @media(max-width:768px){.about-hero{flex-direction:column;padding:1.5rem}.nav-links{gap:.6rem}}
 @media(max-width:480px){.container{padding:1.25rem}.about h1{font-size:1.5rem}.cta-button{width:100%}}
 /* ensure section headings don't sit beside floats */
-section > h2{clear:both;display:block;margin-top:1.25rem}
+section > h2{clear:both;display:block;margin-top:1.25rem;color:#000}
 /* footer at bottom */
 footer{background:linear-gradient(180deg,var(--color-dark),rgba(52,73,94,0.9));color:rgba(255,255,255,0.92);padding:2rem 0;text-align:center;margin-top:auto}
 footer p{margin:0}
