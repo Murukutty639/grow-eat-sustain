@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!--
+======================================================
+ABOUT AUTHOR PAGE HTML
+======================================================
+
+PURPOSE:
+This page introduces the author and lists research/image credits.
+
+WHY THIS PAGE MATTERS:
+An informational website should show where its facts and images come from.
+The references section helps visitors verify sources and gives credit.
+
+HOW IT CONNECTS:
+- about.css styles this page.
+- ../motion.css adds shared animations and interactive polish.
+- ../animations.js handles reveal animation, leaves, hover effects, and scrolling.
+-->
+<html lang="en">
+
+<head>
+    <!-- The head contains browser settings, the page title, CSS links, and JavaScript links. -->
+    <meta charset="UTF-8">
+    <!-- This makes the page look good on mobile and desktop screens. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grow, Eat, Sustain - About Author</title>
+    <!-- Transparent PNG favicon so the browser tab icon does not show the old checkerboard background. -->
+    <link rel="icon" type="image/png" href="Images/Website_icon_transparent.png">
+    <!-- Adds a temporary class so animated elements can load cleanly. -->
+    <script>document.documentElement.classList.add('motion-preload');window.setTimeout(function(){document.documentElement.classList.remove('motion-preload');},1500);</script>
+    <!-- Page-specific About Author styles. -->
+    <link rel="stylesheet" href="css/about.css">
+    <!-- Shared animation styles used on every page. -->
+    <link rel="stylesheet" href="css/motion.css">
+    <!-- Shared JavaScript for scroll, reveal, hover, and leaf animations. -->
+    <script src="js/animations.js" defer></script>
+</head>
+
+<body class="has-motion-leaves motion-page-about">
+    <!--
+    `has-motion-leaves` and `motion-page-about` tell the shared motion CSS/JS
+    that this page should use the About page version of background leaf effects.
+    -->
+    <!-- About page content and metadata -->
+    <header>
+        <div class="site-nav">
+            <div class="container nav-inner">
+                <div class="brand">Grow, Eat, Sustain</div>
+                <!-- Main navigation links to the main pages. -->
+                <nav class="nav-links" aria-label="Main navigation">
+                    <a href="index.html">Home</a>
+                    <a href="pap.html">PAP</a>
+                    <a href="about_me.html" aria-current="page">About Author</a>
+                </nav>
+                <!-- Call-to-action button in the header. -->
+                <div class="nav-actions">
+                    <a class="btn cta-button" href="get_involved.html">Get Involved</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <h1>About the Author</h1>
+            <!-- The main heading communicates the purpose of the page. -->
+        </div>
+    </header>
+
+    <!-- About page biography and references -->
+    <main class="container">
+        <!-- aria-labelledby connects this section to the h2 title for accessibility. -->
+        <section aria-labelledby="author-bio-title">
+            <!-- Screen readers can identify this region by the heading below. -->
+            <h2 id="author-bio-title">Author Biography</h2>
+            <p>Murugan is an AI student and nature lover who enjoys exploring the natural world. He is passionate about solving environmental challenges and promoting sustainable food systems.</p>
+        </section>
+
+        <!-- This section lists research links and image credits. -->
+        <section aria-labelledby="references-title">
+            <!-- References are grouped in one section because they serve one purpose: credit and verification. -->
+            <h2 id="references-title">References &amp; Credits</h2>
+            <!-- `&amp;` is the safe HTML entity for an ampersand character. -->
+
+            <div>
+                <!-- This div groups research source links separately from image credits. -->
+                <h3>Research Sources</h3>
+                <ul>
+                    <!-- Each list item contains one external reference link. -->
+                    <li><a href="https://www.mse.gov.sg/latest-news/press-release-on-30-x-30-express/">MSE press release on 30x30 Express</a></li>
+                    <li><a href="https://libguides.singaporetech.edu.sg/sustainability/foodsystems">Singapore Institute of Technology Subject Guide on Sustainable Food Systems</a></li>
+                    <li><a href="https://www.sg101.gov.sg/economy/case-studies/agritechinsg/">SG101 - Agritech in Singapore</a></li>
+                    <li><a href="https://www.nea.gov.sg/our-services/waste-management/3r-programmes-and-resources/food-waste-management">NEA - Food Waste Management</a></li>
+                    <li><a href="https://gardeningsg.nparks.gov.sg/">Gardening SG - NParks</a></li>
+                    <li><a href="https://www.nea.gov.sg/media/news/news/index/half-of-food-waste-thrown-away-by-singapore-households-can-be-prevented-nea-household-waste-study">NEA Household Waste Study</a></li>
+                    <li><a href="https://www.nea.gov.sg/our-services/waste-management/3r-programmes-and-resources/food-waste-management/food-waste-management-strategies">NEA - Food Waste Management Strategies</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <!-- This div groups image credits so visitors can distinguish media sources from research sources. -->
+                <h3>Image Credits</h3>
+                <ul>
+                    <li><a href="https://www.agardenpatch.com/tomato-plant-spacing/">Image of tomato plant spacing - A Garden Patch</a></li>
+                    <li><a href="https://unsplash.com/s/photos/vegetables">Image of vegetables - Unsplash</a></li>
+                    <li><a href="https://www.istockphoto.com/photo/blue-growth-graph-business-chart-data-diagram-on-success-financial-presentation-gm1402830853-455599094?searchscope=image%2Cfilm%2Cvideo%2Caudio&sort=best&mediatype=image">Image of growth graph - iStock</a></li>
+                    <li><a href='https://www.istockphoto.com/search/2/image-film?phrase=zero+food+waste&tracked_gsrp_landing=https%3A%2F%2Fwww.istockphoto.com%2Fphotos%2Fzero-food-waste'>Image of zero food waste - iStock</a></li>
+                    <li><a href = 'https://www.shutterstock.com/image-photo/green-recycling-symbol-on-organic-compost-2767055423?trackingId=ec4c6cb1-c2fd-4215-91d4-4169ff3ce9e8&listId=searchResults'>Image of green recycling symbol - Shutterstock</a></li>
+                    <li>Decorative leaf SVG shapes - inline project artwork</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer = bottom bar of the page. -->
+    <footer>
+        <p>&copy; 2026 Grow, Eat, Sustain</p>
+    </footer>
+</body>
+
+</html>
