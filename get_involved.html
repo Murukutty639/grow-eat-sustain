@@ -9,9 +9,10 @@ This page gives visitors simple actions they can take after learning about
 sustainable food. It is a call-to-action page rather than a long information page.
 
 HOW IT CONNECTS:
-- styles_involved.css handles this page's layout and card/button design.
-- ../motion.css adds shared animations, hover effects, and the Back to top button style.
-- ../animations.js reveals cards on scroll and adds shared motion behavior, including the Back to top button.
+- css/styles_involved.css handles this page's layout and card/button design.
+- css/motion.css adds shared animations, hover effects, and the Back to top button style.
+- js/preload.js prevents animation elements from flashing before motion loads.
+- js/animations.js reveals cards on scroll and adds shared motion behavior, including the Back to top button.
 -->
 <html lang="en">
 
@@ -22,9 +23,9 @@ HOW IT CONNECTS:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grow, Eat, Sustain - Get Involved</title>
     <!-- Transparent PNG favicon so the browser tab icon does not show the old checkerboard background. -->
-    <link rel="icon" type="image/png" href="Images/Website_icon_transparent.png">
-    <!-- Adds a temporary preload class so animations start smoothly. -->
-    <script>document.documentElement.classList.add('motion-preload');window.setTimeout(function(){document.documentElement.classList.remove('motion-preload');},1500);</script>
+    <link rel="icon" type="image/png" href="images/website-icon-transparent.png">
+    <!-- External preload script prevents reveal animations from flashing before shared motion code loads. -->
+    <script src="js/preload.js"></script>
     <!-- Page-specific styles for Get Involved. -->
     <link rel="stylesheet" href="css/styles_involved.css">
     <!-- Shared animation styles. -->

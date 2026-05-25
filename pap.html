@@ -27,9 +27,9 @@ It also creates the shared neon-pink Back to top button for quick page return.
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grow, Eat, Sustain - Personal Action Plan</title>
     <!-- Transparent PNG favicon so the browser tab icon does not show the old checkerboard background. -->
-    <link rel="icon" type="image/png" href="Images/Website_icon_transparent.png">
-    <!-- Adds a temporary preload class so reveal animations do not flash before loading. -->
-    <script>document.documentElement.classList.add('motion-preload');window.setTimeout(function(){document.documentElement.classList.remove('motion-preload');},1500);</script>
+    <link rel="icon" type="image/png" href="images/website-icon-transparent.png">
+    <!-- External preload script prevents reveal animations from flashing before shared motion code loads. -->
+    <script src="js/preload.js"></script>
     <!-- Page-specific PAP styles. -->
     <link rel="stylesheet" href="css/styles_pap.css">
     <!-- Shared animation styles for all pages. -->
@@ -104,7 +104,7 @@ It also creates the shared neon-pink Back to top button for quick page return.
             <!-- Figure groups an image and caption together. -->
             <figure class="media-right">
                 <!-- `media-right` floats the image on desktop and stacks it on mobile. -->
-                <img class="img-rounded" src="Images/graph_going_up.jpg" alt="Graph with an arrow going up" loading="lazy">
+                <img class="img-rounded" src="images/graph-going-up.jpg" alt="Graph with an arrow going up" loading="lazy">
                 <!--
                 `loading="lazy"` improves performance by delaying image loading
                 until the browser expects the image to be needed.
@@ -165,7 +165,7 @@ It also creates the shared neon-pink Back to top button for quick page return.
                 <h3>Linking Back to the Main Problem</h3>
                 <figure class="media-left">
                     <!-- This image appears beside the final explanation on larger screens. -->
-                    <img class="img-rounded" src="Images/zero_food_wastage.jpg" alt="Zero food wastage message" loading="lazy">
+                    <img class="img-rounded" src="images/zero-food-wastage.jpg" alt="Zero food wastage message" loading="lazy">
                     <figcaption>Zero food wastage is possible when households work together.</figcaption>
                 </figure>
                 <p>
