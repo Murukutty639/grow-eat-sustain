@@ -17,6 +17,7 @@
  * - It creates decorative leaves dynamically, meaning the leaves are added by
  *   code instead of being hard-coded into every HTML page.
  * - It improves navigation by making anchor-link jumps feel smooth.
+ * - It creates the shared neon-pink Back to top button used on every page.
  *
  * IMPORTANT ARCHITECTURE IDEA:
  * This file does not draw animations directly with JavaScript. Instead, it
@@ -624,6 +625,103 @@
     });
   };
 
+  // Smoothly scroll to the top of the current page.
+  const smoothScrollToTop = () => {
+    if (prefersReducedMotion()) {
+      window.scrollTo(0, 0);
+      // Respect accessibility settings: jump normally instead of animating.
+      return 0;
+    }
+
+    if (activeScrollFrame) {
+      window.cancelAnimationFrame(activeScrollFrame);
+      // Stop any in-progress section scroll before returning to the top.
+    }
+
+    const startY = window.scrollY || window.pageYOffset;
+    // Current vertical scroll position.
+
+    const duration = clamp(startY * 0.15, 0.1, 3.6);
+    // Longer pages get a slightly longer return animation, but the clamp keeps
+    // the timing quick enough that the button still feels responsive.
+
+    const startTime = performance.now();
+    // High-precision timestamp used to calculate animation progress.
+
+    root.classList.add('is-smooth-scrolling');
+
+    const step = (now) => {
+      const elapsed = now - startTime;
+      // Time passed since the animation began.
+      const progress = clamp(elapsed / duration, 0, 1);
+      // Converts elapsed time into a 0-to-1 progress value.
+      const eased = easeOutCinematic(progress);
+      // Uses the same gentle landing as normal section scrolling.
+
+      window.scrollTo(0, startY * (1 - eased));
+      // Moves closer to the top as the animation progresses.
+
+      if (progress < 1) {
+        activeScrollFrame = window.requestAnimationFrame(step);
+        return;
+      }
+
+      activeScrollFrame = 0;
+      root.classList.remove('is-smooth-scrolling');
+      window.scrollTo(0, 0);
+      // Snap exactly to the top at the end to avoid tiny rounding leftovers.
+    };
+
+    activeScrollFrame = window.requestAnimationFrame(step);
+    return duration;
+  };
+
+  // ======================================================
+  // BACK TO TOP BUTTON
+  // ======================================================
+  //
+  // PURPOSE:
+  // This creates one shared neon-pink button on every page. Clicking it returns
+  // the page to the top.
+  //
+  // WHY JAVASCRIPT CREATES IT:
+  // The same control is needed across the website. Creating it here keeps the
+  // HTML files focused on page content instead of repeating shared UI.
+  //
+  // RESPONSIVE IDEA:
+  // CSS keeps the button in the bottom-right corner on large screens and lifts
+  // it above the mobile floating section nav on smaller screens.
+  const initBackToTopButton = () => {
+    if (doc.querySelector('.back-to-top-button')) {
+      return;
+      // Avoid creating duplicates if the script is loaded more than once.
+    }
+
+    const button = doc.createElement('button');
+    button.type = 'button';
+    button.className = 'back-to-top-button';
+    button.textContent = 'Back to top';
+    button.setAttribute('aria-label', 'Back to top');
+    // The label is visible, and aria-label gives screen readers the same action.
+
+    doc.body.appendChild(button);
+    // Appending at the end keeps the button outside page content while CSS fixes
+    // it to the viewport.
+
+    button.addEventListener('click', () => {
+      smoothScrollToTop();
+
+      if (window.location.hash) {
+        try {
+          history.pushState(null, '', window.location.pathname + window.location.search);
+          // Removing the hash keeps the URL matched to the top of the page.
+        } catch {
+          // If the browser blocks history changes, scrolling still works.
+        }
+      }
+    });
+  };
+
   // ======================================================
   // FLOATING NAVIGATION ACTIVE TRACKING
   // ======================================================
@@ -1057,14 +1155,16 @@
     // Create a layer of random soft leaves across the background.
     const ambientLayer = doc.createElement('div');
     // Creates a new <div> that will hold many soft background leaves.
-    const ambientCount = variant === 'home' ? 24 : 8;
-    // Home gets more leaves because it is the main visual landing page.
+    const ambientCount = variant === 'home' ? 24 : 18;
+    // Home stays the fullest, while PAP and About now get enough leaves to feel
+    // visibly decorated instead of sparse.
     const minSize = variant === 'home' ? 72 : 96;
     // Minimum generated leaf size in pixels.
     const sizeRange = variant === 'home' ? 144 : 128;
     // Random extra size range added to minSize.
-    const clusterLeafCount = variant === 'home' ? 6 : 4;
-    // Number of larger leaves in each side cluster.
+    const clusterLeafCount = 6;
+    // Number of larger leaves in each side cluster. PAP and About now match
+    // Home's cluster count so their side decorations feel richer.
 
     ambientLayer.className = `ambient-leaves ambient-leaves--${variant}`;
     ambientLayer.setAttribute('aria-hidden', 'true');
@@ -1130,13 +1230,14 @@
     // 1. Sync reduced-motion state first so every system knows accessibility.
     // 2. Create leaves before reveal setup so decorative elements exist early.
     // 3. Prepare reveal classes and observers.
-    // 4. Prepare click scrolling and floating navigation.
+    // 4. Prepare click scrolling, the Back to top button, and floating navigation.
     // 5. Prepare hover and parallax enhancements last.
     // Start all animation systems after the page is ready.
     syncReducedMotionClass();
     initLeafAnimations();
     initScrollReveal();
     initSmoothScroll();
+    initBackToTopButton();
     initFloatingNavigation();
     initMagneticHover();
     initParallax();

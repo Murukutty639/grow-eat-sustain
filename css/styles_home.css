@@ -15,7 +15,7 @@ navigation layout, images, videos, floating figures, cards, and responsive rules
 HOW IT CONNECTS:
 - index.html provides the elements and class names.
 - styles_home.css gives those elements their main layout and visual design.
-- ../motion.css adds shared animation behavior on top.
+- ../motion.css adds shared animation behavior and the Back to top button on top.
 - ../animations.js adds classes and CSS variables that both CSS files can read.
 
 IMPORTANT:

@@ -1,7 +1,7 @@
 /* ===== MOTION TOKENS ===== */
 /* Beginner note:
    This shared CSS file controls animations and special effects for every page.
-   It works together with animations.js, which adds classes and CSS variables while the user scrolls or hovers. */
+   It works together with animations.js, which adds classes, CSS variables, and the shared Back to top button. */
 /*
 ======================================================
 BEGINNER GUIDE TO THIS SHARED MOTION FILE
@@ -11,8 +11,8 @@ PURPOSE:
 This file is the shared animation layer for the entire "Grow, Eat, Sustain"
 website. The page-specific CSS files decide the basic page layout, while this
 file adds premium motion: reveal animations, floating leaves, hover lift,
-magnetic button movement, parallax media, floating section navigation, and
-reduced-motion accessibility.
+magnetic button movement, parallax media, floating section navigation, the
+neon-pink Back to top button, and reduced-motion accessibility.
 
 HOW CSS AND JAVASCRIPT WORK TOGETHER HERE:
 1. HTML gives elements class names such as `.site-nav`, `.card`, `.action`,
@@ -2068,6 +2068,88 @@ It also updates CSS variables so the active indicator can move.
   animation: none;
 }
 
+/* ===== BACK TO TOP BUTTON ===== */
+/* This shared fixed button returns users to the top of the current page. */
+/*
+======================================================
+NEON-PINK BACK TO TOP BUTTON
+======================================================
+
+PURPOSE:
+This button gives users a quick return path after they scroll down a long page.
+animations.js creates the button once on every page, while this CSS keeps it
+fixed in a consistent viewport position.
+
+COLOR:
+The requested neon pink is `#FF10F0` / rgb(255, 16, 240). The gradients keep
+that color as the main signal while adding depth so it matches the orange
+floating navigation menu's polished style.
+
+RESPONSIVE BEHAVIOR:
+On desktop, the button sits in the bottom-right corner. On mobile, it moves
+above the bottom floating section nav so the two controls do not overlap.
+*/
+.back-to-top-button {
+  --button-scale: 1;
+  --back-top-pink: #ff10f0;
+  --back-top-deep: #8f087f;
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: 5200;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 8.25rem;
+  min-height: 2.9rem;
+  padding: 0.78rem 1rem;
+  border: 1px solid rgba(255, 214, 253, 0.48);
+  border-radius: 999px;
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 22% 18%, rgba(255, 255, 255, 0.48), transparent 36%),
+    linear-gradient(150deg, rgba(255, 16, 240, 0.96), rgba(143, 8, 127, 0.88));
+  box-shadow:
+    0 18px 48px rgba(255, 16, 240, 0.32),
+    0 0 0 1px rgba(255, 255, 255, 0.12) inset,
+    0 1px 0 rgba(255, 255, 255, 0.36) inset;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0;
+  text-shadow: 0 1px 18px rgba(84, 0, 76, 0.36);
+  cursor: pointer;
+  opacity: 0.94;
+  transform: translate3d(var(--magnetic-x), var(--magnetic-y), 0) scale(var(--button-scale));
+  transition:
+    opacity 320ms var(--motion-ease),
+    transform 360ms var(--motion-ease),
+    box-shadow 360ms var(--motion-ease),
+    background-position 620ms var(--motion-ease);
+  will-change: opacity, transform;
+}
+
+.back-to-top-button:hover,
+.back-to-top-button:focus-visible {
+  --button-scale: 1.035;
+  opacity: 1;
+  box-shadow:
+    0 22px 62px rgba(255, 16, 240, 0.42),
+    0 0 28px rgba(255, 16, 240, 0.36),
+    0 0 0 1px rgba(255, 255, 255, 0.18) inset,
+    0 1px 0 rgba(255, 255, 255, 0.42) inset;
+}
+
+.back-to-top-button:focus-visible {
+  outline: 3px solid rgba(255, 16, 240, 0.3);
+  outline-offset: 5px;
+}
+
+.back-to-top-button:active {
+  --button-scale: 0.98;
+}
+
 .card:hover,
 .pap-card:hover,
 .profile:hover,
@@ -2182,6 +2264,7 @@ BREAKPOINTS:
   - leaves are less prominent
   - card hover lift is smaller
   - floating nav moves from side to bottom
+  - Back to top rises above the bottom floating nav
   */
   :root {
     --reveal-duration: 720ms;
@@ -2255,6 +2338,15 @@ BREAKPOINTS:
     --nav-shift-x: 0px;
     --button-scale: 1.08;
   }
+
+  .back-to-top-button {
+    right: max(0.75rem, env(safe-area-inset-right));
+    bottom: calc(5.55rem + env(safe-area-inset-bottom));
+    min-width: 7.75rem;
+    min-height: 2.65rem;
+    padding: 0.68rem 0.86rem;
+    font-size: 0.84rem;
+  }
 }
 
 @media (max-width: 520px) {
@@ -2274,6 +2366,13 @@ BREAKPOINTS:
   .leaf-cluster,
   .ambient-leaves {
     display: none;
+  }
+
+  .back-to-top-button {
+    right: max(0.65rem, env(safe-area-inset-right));
+    bottom: calc(5.35rem + env(safe-area-inset-bottom));
+    min-width: 7rem;
+    font-size: 0.78rem;
   }
 }
 

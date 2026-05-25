@@ -16,8 +16,8 @@ sections, floating images, PAP cards, and responsive layouts.
 HOW IT CONNECTS:
 - pap.html provides headings, sections, articles, figures, lists, and nav links.
 - styles_pap.css gives those elements their base styling.
-- motion.css adds shared animations and floating navigation effects.
-- animations.js handles active section tracking and reveal classes.
+- motion.css adds shared animations, floating navigation effects, and the Back to top button style.
+- animations.js handles active section tracking, reveal classes, and the shared Back to top button.
 */
 
 /* ===== GLOBAL :root & BASE ===== */

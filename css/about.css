@@ -16,7 +16,7 @@ references, credits, profile grids, navigation, and responsive behavior.
 HOW IT CONNECTS:
 about_me.html supplies the structure.
 about.css supplies page-specific styling.
-motion.css and animations.js add shared motion on top.
+motion.css and animations.js add shared motion and the Back to top button on top.
 */
 
 /* ===== GLOBAL :root & BASE ===== */

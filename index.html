@@ -11,10 +11,10 @@ it decides what content exists and how that content is grouped.
 HOW THIS PAGE CONNECTS TO THE REST OF THE PROJECT:
 - styles_home.css controls the Home page's base layout and colors.
 - ../motion.css adds shared animations, reveal effects, hover polish, leaves,
-  parallax, and floating navigation styling.
+  parallax, floating navigation styling, and the neon-pink Back to top button.
 - ../animations.js adds interactive behavior such as smooth scrolling,
   IntersectionObserver reveal animations, magnetic hover effects, and generated
-  background leaves.
+  background leaves. It also creates the shared Back to top button.
 
 BEGINNER IDEA:
 HTML does not "animate" by itself. It provides elements with class names and ids.
@@ -45,7 +45,7 @@ CSS and JavaScript use those class names and ids to style and control the page.
     <link rel="stylesheet" href="css/styles_home.css">
     <!-- Shared animation and motion styles used across the whole website. -->
     <link rel="stylesheet" href="css/motion.css">
-    <!-- Shared JavaScript that controls reveal animations, smooth scrolling, leaves, and hover effects. -->
+    <!-- Shared JavaScript that controls reveal animations, smooth scrolling, leaves, hover effects, and the Back to top button. -->
     <script src="js/animations.js" defer></script>
 </head>
 
